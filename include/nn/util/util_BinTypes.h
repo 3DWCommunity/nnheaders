@@ -1,6 +1,7 @@
 #pragma once
 
 #include <nn/util/util_BytePtr.h>
+#include <nn/util/util_Endian.h>
 #include <nn/util/util_StringView.h>
 #include "nn/types.h"
 
@@ -12,8 +13,19 @@ constexpr uint32_t MakeSignature(u8 a, u8 b, u8 c, u8 d) {
 }
 
 struct BinFileSignature {
-    bool IsValid(const char*) const;
-    bool IsValid(int64_t) const;
+    inline bool IsValid(const char* s) const {
+        int len = static_cast<int>(sizeof(_str));
+        for (int i = 0; i < len; i++) {
+            if (_str[i] != s[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    bool IsValid(int64_t s) const { return s == util::LoadLittleEndian(&_packed); }
+
     void Set(const char*);
     const char* Get() const;
     void SetPacked(int64_t);
