@@ -1,6 +1,6 @@
 #pragma once
 
-#include "nn/g3d/ResSkeleton.h"
+#include "nn/g3d/g3d_ResSkeleton.h"
 
 namespace nn::g3d {
 

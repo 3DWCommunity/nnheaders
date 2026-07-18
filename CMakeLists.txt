@@ -186,20 +186,20 @@ add_library(NintendoSDK OBJECT
   include/nn/ui2d/ui2d_Parts.h
   include/nn/ui2d/ui2d_Pane.h
   include/nn/ui2d/ui2d_Material.h
-  include/nn/g3d/BindFuncTable.h
-  include/nn/g3d/ModelObj.h
-  include/nn/g3d/ResMaterialAnim.h
-  include/nn/g3d/ResShapeAnim.h
-  include/nn/g3d/ResLightAnim.h
-  include/nn/g3d/ResSkeletalAnim.h
-  include/nn/g3d/ResSceneAnim.h
-  include/nn/g3d/ResFile.h
-  include/nn/g3d/ResMaterial.h
-  include/nn/g3d/ResFogAnim.h
-  include/nn/g3d/ResModel.h
-  include/nn/g3d/ResSkeleton.h
-  include/nn/g3d/SkeletonObj.h
-  include/nn/g3d/World.h
+  include/nn/g3d/g3d_BindFuncTable.h
+  include/nn/g3d/g3d_ModelObj.h
+  include/nn/g3d/g3d_ResMaterialAnim.h
+  include/nn/g3d/g3d_ResShapeAnim.h
+  include/nn/g3d/g3d_ResLightAnim.h
+  include/nn/g3d/g3d_ResSkeletalAnim.h
+  include/nn/g3d/g3d_ResSceneAnim.h
+  include/nn/g3d/g3d_ResFile.h
+  include/nn/g3d/g3d_ResMaterial.h
+  include/nn/g3d/g3d_ResFogAnim.h
+  include/nn/g3d/g3d_ResModel.h
+  include/nn/g3d/g3d_ResSkeleton.h
+  include/nn/g3d/g3d_SkeletonObj.h
+  include/nn/g3d/g3d_World.h
   include/nn/nn.h
   include/nn/settings.h
   include/nn/hid.h
