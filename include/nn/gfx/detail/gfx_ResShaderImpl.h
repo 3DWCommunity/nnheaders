@@ -1,5 +1,6 @@
 #pragma once
 
+#include <nn/gfx/detail/gfx_Declare.h>
 #include <nn/gfx/gfx_Common.h>
 #include <nn/gfx/gfx_VariationBase.h>
 
@@ -19,8 +20,8 @@ public:
 class ResShaderContainerImpl {
 public:
     template <typename TTarget>
-    static void Initialize(ResShaderContainer*, DeviceImpl<TTarget>*) {
-        // todo: implement this, used in vfx_Resource.cpp
+    static void Initialize(ResShaderContainer* pThis, DeviceImpl<TTarget>* pDevice) {
+        Initialize<TTarget>(pThis, pDevice, nullptr, 0, 0);
     }
 
     template <typename TTarget>

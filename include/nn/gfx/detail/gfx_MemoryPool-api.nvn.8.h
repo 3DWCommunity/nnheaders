@@ -16,6 +16,7 @@ class MemoryPoolImpl<ApiVariationNvn8>
     NN_NO_COPY(MemoryPoolImpl);
 
 public:
+    typedef ApiVariationNvn8 Target;
     typedef MemoryPoolInfo InfoType;
 
     static size_t GetPoolMemoryAlignment(DeviceImpl<ApiVariationNvn8>*, const InfoType&);
@@ -24,8 +25,8 @@ public:
     MemoryPoolImpl();
     ~MemoryPoolImpl();
 
-    void Initialize(DeviceImpl<ApiVariationNvn8>*, const InfoType&);
-    void Finalize(DeviceImpl<ApiVariationNvn8>*);
+    void Initialize(DeviceImpl<Target>*, const InfoType&);
+    void Finalize(DeviceImpl<Target>*);
     void* Map() const;
     void Unmap() const;
     void FlushMappedRange(ptrdiff_t, size_t) const;

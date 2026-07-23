@@ -4,7 +4,9 @@
 #include <nn/gfx/detail/gfx_Declare.h>
 #include <nn/gfx/detail/gfx_ResShaderImpl.h>
 #include <nn/gfx/gfx_Common.h>
+#include <nn/gfx/gfx_MemoryPool.h>
 #include <nn/gfx/gfx_ResShaderData.h>
+#include <nn/gfx/gfx_Shader.h>
 #include <nn/util/AccessorBase.h>
 #include <nn/util/util_BinaryFormat.h>
 
@@ -40,6 +42,12 @@ public:
         return detail::Caster<const void>(this->pObj.Get());
     }
     const nngfxToolShaderCompilerShaderReflection* GetShaderCompilerReflection() const;
+
+    template <typename TTarget>
+    ShaderInitializeResult Initialize(TDevice<TTarget>* pDevice) {
+        return static_cast<TShader<TTarget>*>(this->pObj.Get())
+            ->Initialize(pDevice, DataToAccessor(this->info));
+    }
 };
 
 class ResShaderVariation : public nn::util::AccessorBase<ResShaderVariationData> {
@@ -107,6 +115,17 @@ public:
 
     const ResShaderVariation* GetResShaderVariation(int index) const {
         return ResShaderVariation::ToAccessor(pShaderVariationArray.Get() + index);
+    }
+
+    template <typename TTarget>
+    void Initialize(TDevice<TTarget>* pDevice) {
+        return Impl::Initialize(this, pDevice);
+    }
+
+    template <typename TTarget>
+    void Initialize(TDevice<TTarget>* pDevice, TMemoryPool<TTarget>* pMemoryPool,
+                    ptrdiff_t memoryPoolOffset, size_t memoryPoolSize) {
+        return Impl::Initialize(this, pDevice, pMemoryPool, memoryPoolOffset, memoryPoolSize);
     }
 
     template <typename TTarget>

@@ -34,6 +34,22 @@ public:
     static void FreeMemory(void* src);
 
     template <typename T>
+    static T* NewArray(int count) {
+        void* pMem = Layout::AllocateMemory(sizeof(T) * count);
+        if (!pMem) {
+            return 0;
+        }
+
+        T* const objAry = static_cast<T*>(pMem);
+
+        for (int i = 0; i < count; ++i) {
+            new (&objAry[i]) T();
+        }
+
+        return objAry;
+    }
+
+    template <typename T>
     static void DeleteArray(T objs[], int count) {
         if (objs) {
             for (int i = 0; i < count; ++i) {

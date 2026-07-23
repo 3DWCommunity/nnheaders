@@ -18,7 +18,10 @@ public:
     static size_t GetBinaryCodeAlignment(TDevice<TTarget>*);
 
     TShader();
-    ShaderInitializeResult Initialize(TDevice<TTarget>*, const InfoType&);
+
+    ShaderInitializeResult Initialize(TDevice<Target>* pDevice, const InfoType& info) {
+        return Impl::Initialize(pDevice, info);
+    }
 
     void Finalize(TDevice<Target>* pDevice) { return Impl::Finalize(pDevice); }
 

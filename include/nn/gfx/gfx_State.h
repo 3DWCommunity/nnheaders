@@ -71,7 +71,7 @@ public:
         return detail::RequiredMemory<Impl>::MemoryFuncImpl::GetRequiredMemorySize(info);
     }
 
-    TVertexState();
+    TVertexState() {}
 
     void SetMemory(void* pMemory, size_t size) {
         return detail::RequiredMemory<Impl>::MemoryFuncImpl::SetMemory(pMemory, size);

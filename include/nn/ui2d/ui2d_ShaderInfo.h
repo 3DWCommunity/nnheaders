@@ -27,6 +27,18 @@ public:
     void SetShader(nn::gfx::CommandBuffer&, int) const;
     int GetTextureSlotCount() const;
 
+    void InitializeWithVariationTable(nn::gfx::Device* pDevice, void* pShader,
+                                      const void* pVariationTable) {
+        InitializeWithVariationTable(pDevice, pShader, pVariationTable, nullptr, 0, 0);
+    }
+
+    void InitializeWithVariationTable(nn::gfx::Device* pDevice, void* pShader,
+                                      const void* pVariationTable, nn::gfx::MemoryPool* pMemoryPool,
+                                      ptrdiff_t memoryPoolOffset, size_t memoryPoolSize) {
+        InitializeWithVariationTable(pDevice, pShader, pVariationTable, pMemoryPool,
+                                     memoryPoolOffset, memoryPoolSize, 3);
+    }
+
     nn::gfx::ResShaderFile* m_pResShaderFile;
     uint32_t m_Flags;
     nn::gfx::VertexState* m_pVertexStates;

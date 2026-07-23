@@ -6,10 +6,13 @@
 namespace nn::gfx {
 
 template <class TTarget>
-class TMemoryPool : public detail::MemoryPoolImpl<TTarget> {
+class TMemoryPool : public detail::MemoryPoolImpl<typename detail::TargetVariation<TTarget>::Type> {
     NN_NO_COPY(TMemoryPool);
 
+    typedef detail::MemoryPoolImpl<typename detail::TargetVariation<TTarget>::Type> Impl;
+
 public:
+    typedef typename Impl::Target Target;
     typedef MemoryPoolInfo InfoType;
 
     static size_t GetPoolMemoryAlignment(TDevice<TTarget>*, const InfoType&);

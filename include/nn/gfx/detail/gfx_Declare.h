@@ -22,7 +22,16 @@ struct DeviceInfoImplData;
 template <typename TTarget = TargetConfig::Variation>
 class TDeviceInfo;
 
+template <typename TTarget>
+class TMemoryPool;
+
 namespace detail {
+
+template <typename TTarget>
+class MemoryPoolImpl;
+
+template <typename TTarget>
+class MemoryPoolInfoImpl;
 
 template <typename TTarget>
 class DeviceImpl;
