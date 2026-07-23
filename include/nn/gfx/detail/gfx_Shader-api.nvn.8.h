@@ -15,6 +15,7 @@ class ShaderImpl<ApiVariationNvn8> : public DataContainer<ShaderImplData<ApiVari
     NN_NO_COPY(ShaderImpl);
 
 public:
+    typedef ApiVariationNvn8 Target;
     typedef ShaderInfo InfoType;
 
     static size_t GetBinaryCodeAlignment(DeviceImpl<ApiVariationNvn8>*);
@@ -22,7 +23,7 @@ public:
     ShaderImpl();
     ~ShaderImpl();
     ShaderInitializeResult Initialize(DeviceImpl<ApiVariationNvn8>*, const InfoType&);
-    void Finalize(DeviceImpl<ApiVariationNvn8>*);
+    void Finalize(DeviceImpl<Target>*);
     int GetInterfaceSlot(ShaderStage, ShaderInterfaceType, const char*) const;
     void GetWorkGroupSize(int*, int*, int*) const;
 };

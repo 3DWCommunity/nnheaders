@@ -48,22 +48,46 @@ public:
     void Finalize(TDevice<TTarget>*);
 };
 
-template <class TTarget>
-class TVertexState : public detail::VertexStateImpl<TTarget>,
-                     private detail::RequiredMemory<detail::VertexStateImpl<TTarget>> {
+template <typename TTarget>
+class TVertexState
+    : public detail::VertexStateImpl<typename detail::TargetVariation<TTarget>::Type>,
+      private detail::RequiredMemory<
+          detail::VertexStateImpl<typename detail::TargetVariation<TTarget>::Type>> {
     NN_NO_COPY(TVertexState);
 
+    typedef detail::VertexStateImpl<typename detail::TargetVariation<TTarget>::Type> Impl;
+
 public:
+    typedef typename Impl::Target Target;
     typedef VertexStateInfo InfoType;
 
-    static size_t GetRequiredMemorySize(const InfoType&);
+    // needed to avoid ambiguity
+    enum RequiredMemoryInfo {
+        RequiredMemoryInfo_Alignment =
+            detail::RequiredMemory<Impl>::MemoryInfoImpl::RequiredMemoryInfo_Alignment
+    };
+
+    static size_t GetRequiredMemorySize(const InfoType& info) {
+        return detail::RequiredMemory<Impl>::MemoryFuncImpl::GetRequiredMemorySize(info);
+    }
 
     TVertexState();
-    void SetMemory(void*, size_t);
-    void* GetMemory();
-    const void* GetMemory() const;
-    void Initialize(TDevice<TTarget>*, const InfoType&, const TShader<TTarget>*);
-    void Finalize(TDevice<TTarget>*);
+
+    void SetMemory(void* pMemory, size_t size) {
+        return detail::RequiredMemory<Impl>::MemoryFuncImpl::SetMemory(pMemory, size);
+    }
+
+    void* GetMemory() { return detail::RequiredMemory<Impl>::MemoryFuncImpl::GetMemory(); }
+
+    const void* GetMemory() const {
+        return detail::RequiredMemory<Impl>::MemoryFuncImpl::GetMemory();
+    }
+
+    void Initialize(TDevice<Target>* pDevice, const InfoType& info,
+                    const TShader<Target>* pVertexShader = nullptr) {
+        return Impl::Initialize(pDevice, info, pVertexShader);
+    }
+    void Finalize(TDevice<Target>* pDevice) { return Impl::Finalize(pDevice); }
 };
 
 template <class TTarget>

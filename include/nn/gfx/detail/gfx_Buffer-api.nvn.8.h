@@ -18,6 +18,7 @@ class BufferImpl<ApiVariationNvn8> : public DataContainer<BufferImplData<ApiVari
     NN_NO_COPY(BufferImpl);
 
 public:
+    typedef ApiVariationNvn8 Target;
     typedef BufferInfo InfoType;
 
     static const bool IsMemoryPoolRequired = true;
@@ -27,9 +28,9 @@ public:
     BufferImpl();
     ~BufferImpl();
 
-    void Initialize(DeviceImpl<ApiVariationNvn8>*, const BufferInfo&,
-                    MemoryPoolImpl<ApiVariationNvn8>*, ptrdiff_t, size_t);
-    void Finalize(DeviceImpl<ApiVariationNvn8>*);
+    void Initialize(DeviceImpl<Target>*, const BufferInfo&, MemoryPoolImpl<Target>*, ptrdiff_t,
+                    size_t);
+    void Finalize(DeviceImpl<Target>*);
     void* Map() const;
     void Unmap() const;
     void FlushMappedRange(ptrdiff_t, size_t) const;
@@ -43,14 +44,15 @@ class BufferTextureViewImpl<ApiVariationNvn8>
     NN_NO_COPY(BufferTextureViewImpl);
 
 public:
+    typedef ApiVariationNvn8 Target;
     typedef BufferTextureViewInfo InfoType;
 
-    static size_t GetOffsetAlignment(DeviceImpl<ApiVariationNvn8>*, const InfoType&);
+    static size_t GetOffsetAlignment(DeviceImpl<Target>*, const InfoType&);
 
     BufferTextureViewImpl();
     ~BufferTextureViewImpl();
-    void Initialize(DeviceImpl<ApiVariationNvn8>*, const InfoType&);
-    void Finalize(DeviceImpl<ApiVariationNvn8>*);
+    void Initialize(DeviceImpl<Target>*, const InfoType&);
+    void Finalize(DeviceImpl<Target>*);
 };
 
 }  // namespace detail

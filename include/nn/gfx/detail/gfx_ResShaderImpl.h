@@ -1,6 +1,7 @@
 #pragma once
 
 #include <nn/gfx/gfx_Common.h>
+#include <nn/gfx/gfx_VariationBase.h>
 
 namespace nn::gfx {
 
@@ -29,6 +30,7 @@ public:
     template <typename TTarget>
     static void Finalize(ResShaderContainer*, DeviceImpl<TTarget>*);
 };
+
 }  // namespace detail
 
 // todo: figure out where to put this

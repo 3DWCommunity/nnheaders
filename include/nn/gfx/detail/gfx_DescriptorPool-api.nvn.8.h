@@ -19,6 +19,7 @@ class DescriptorPoolImpl<ApiVariationNvn8>
     NN_NO_COPY(DescriptorPoolImpl);
 
 public:
+    typedef ApiVariationNvn8 Target;
     typedef DescriptorPoolInfo InfoType;
 
     static size_t CalculateDescriptorPoolSize(DeviceImpl<ApiVariationNvn8>*, const InfoType&);
@@ -30,7 +31,7 @@ public:
     ~DescriptorPoolImpl();
     void Initialize(DeviceImpl<ApiVariationNvn8>*, const InfoType&,
                     MemoryPoolImpl<ApiVariationNvn8>*, ptrdiff_t, size_t);
-    void Finalize(DeviceImpl<ApiVariationNvn8>*);
+    void Finalize(DeviceImpl<Target>*);
     void BeginUpdate();
     void EndUpdate();
     void SetBufferView(int, const GpuAddress&, size_t);

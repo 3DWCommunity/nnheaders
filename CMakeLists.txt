@@ -150,6 +150,8 @@ if(NN_GFX_TARGET)
       src/NintendoSDK/gfx/gfx_Interoperation-api.nvn.cpp
 
       src/NintendoWare/ui2d/ui2d_ArcExtractor.cpp
+
+      src/NintendoWare/ui2d/ui2d_ShaderInfo.cpp
     )
   endif()
 

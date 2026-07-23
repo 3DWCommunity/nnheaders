@@ -64,6 +64,7 @@ template <>
 class VertexStateImpl<ApiVariationNvn8>
     : public DataContainer<VertexStateImplData<ApiVariationNvn8>> {
 public:
+    typedef ApiVariationNvn8 Target;
     typedef VertexStateInfo InfoType;
 
     enum RequiredMemoryInfo { RequiredMemoryInfo_Alignment = 8 };

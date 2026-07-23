@@ -2,6 +2,7 @@
 
 #include <nn/gfx/detail/gfx_Misc.h>
 #include <nn/gfx/gfx_Common.h>
+#include <nn/gfx/gfx_Variation-api.nvn.h>
 #include <nn/nn_BitTypes.h>
 #include <nn/util/util_BitPack.h>
 

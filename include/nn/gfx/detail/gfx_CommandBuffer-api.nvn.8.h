@@ -26,6 +26,7 @@ class CommandBufferImpl<ApiVariationNvn8>
     NN_NO_COPY(CommandBufferImpl);
 
 public:
+    typedef ApiVariationNvn8 Target;
     typedef CommandBufferInfo InfoType;
 
     typedef void (*OutOfMemoryEventCallback)(TCommandBuffer<ApiVariationNvn8>*,

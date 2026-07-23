@@ -1,6 +1,8 @@
 #pragma once
 
 #include <nn/gfx/detail/gfx_DataContainer.h>
+#include <nn/gfx/detail/gfx_Declare.h>
+#include <nn/gfx/detail/gfx_ResShaderImpl.h>
 #include <nn/gfx/gfx_Common.h>
 #include <nn/gfx/gfx_ResShaderData.h>
 #include <nn/util/AccessorBase.h>
@@ -13,6 +15,8 @@ class ShaderInfo;
 class ResShaderProgram : public nn::util::AccessorBase<ResShaderProgramData> {
     NN_NO_COPY(ResShaderProgram);
 
+    typedef detail::ResShaderProgramImpl Impl;
+
 public:
     static ResShaderProgram* ToAccessor(value_type*);
     static ResShaderProgram& ToAccessor(value_type&);
@@ -21,12 +25,20 @@ public:
         return static_cast<const ResShaderProgram*>(pData);
     }
 
+    template <typename TTarget>
+    void Finalize(TDevice<TTarget>* pDevice) {
+        static_cast<TShader<TTarget>*>(this->pObj.Get())->Finalize(pDevice);
+    }
+
     static const ResShaderProgram& ToAccessor(const value_type&);
 
     ShaderInfo* GetShaderInfo() { return DataToAccessor(info); }
     const ShaderInfo* GetShaderInfo() const { return DataToAccessor(info); }
-    detail::Caster<void> GetShader();
-    detail::Caster<const void> GetShader() const;
+
+    detail::Caster<void> GetShader() { return detail::Caster<void>(this->pObj.Get()); }
+    detail::Caster<const void> GetShader() const {
+        return detail::Caster<const void>(this->pObj.Get());
+    }
     const nngfxToolShaderCompilerShaderReflection* GetShaderCompilerReflection() const;
 };
 
@@ -67,11 +79,18 @@ public:
 class ResShaderContainer : public nn::util::AccessorBase<ResShaderContainerData> {
     NN_NO_COPY(ResShaderContainer);
 
+    typedef detail::ResShaderContainerImpl Impl;
+
 public:
     static const int Signature = 0x63737267;  // ??
 
-    static ResShaderContainer* ToAccessor(value_type*);
-    static ResShaderContainer& ToAccessor(value_type&);
+    static ResShaderContainer* ToAccessor(ResShaderContainerData* pData) {
+        return static_cast<ResShaderContainer*>(pData);
+    }
+
+    static ResShaderContainer& ToAccessor(ResShaderContainerData& data) {
+        return static_cast<ResShaderContainer&>(data);
+    }
 
     static const ResShaderContainer* ToAccessor(const value_type* pData) {
         return static_cast<const ResShaderContainer*>(pData);
@@ -90,6 +109,11 @@ public:
         return ResShaderVariation::ToAccessor(pShaderVariationArray.Get() + index);
     }
 
+    template <typename TTarget>
+    void Finalize(TDevice<TTarget>* pDevice) {
+        return Impl::Finalize(this, pDevice);
+    }
+
     int GetShaderVariationCount() const { return shaderVariationCount; }
 };
 
@@ -104,18 +128,30 @@ public:
 
     static size_t GetMaxFileAlignment();
 
-    static ResShaderFile* ToAccessor(value_type* pData) {
+    static ResShaderFile* ToAccessor(ResShaderFile::value_type* pData) {
         return static_cast<ResShaderFile*>(pData);
     }
 
-    static ResShaderFile& ToAccessor(value_type& data) { return static_cast<ResShaderFile&>(data); }
+    static ResShaderFile& ToAccessor(ResShaderFile::value_type& data) {
+        return static_cast<ResShaderFile&>(data);
+    }
 
-    static const ResShaderFile* ToAccessor(const value_type*);
-    static const ResShaderFile& ToAccessor(const value_type&);
+    static const ResShaderFile* ToAccessor(const ResShaderFile::value_type* pData) {
+        return static_cast<const ResShaderFile*>(pData);
+    }
+
+    static const ResShaderFile& ToAccessor(const ResShaderFile::value_type& data) {
+        return static_cast<const ResShaderFile&>(data);
+    }
+
     static bool IsValid(const void*);
     static ResShaderFile* ResCast(void*);
 
-    ResShaderContainer* GetShaderContainer();
+    ResShaderContainer* GetShaderContainer() {
+        return ResShaderContainer::ToAccessor(
+            reinterpret_cast<ResShaderContainerData*>(this->fileHeader.GetFirstBlock()));
+    }
+
     const ResShaderContainer* GetShaderContainer() const {
         return ResShaderContainer::ToAccessor(
             reinterpret_cast<const ResShaderContainerData*>(fileHeader.GetFirstBlock()));

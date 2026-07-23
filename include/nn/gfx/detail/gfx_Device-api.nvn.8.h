@@ -20,6 +20,7 @@ class DeviceImpl<ApiVariationNvn8> : public DataContainer<DeviceImplData<ApiVari
     NN_NO_COPY(DeviceImpl);
 
 public:
+    typedef ApiVariationNvn8 Target;
     typedef DeviceInfo InfoType;
 
     DeviceImpl();

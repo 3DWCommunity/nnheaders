@@ -1,5 +1,6 @@
 #pragma once
 
+#include <nn/gfx/detail/gfx_BufferInfo-api.nvn.8.h>
 #include <nn/gfx/detail/gfx_DataContainer.h>
 #include <nn/gfx/gfx_BufferInfoData.h>
 #include <nn/gfx/gfx_Enum.h>

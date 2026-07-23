@@ -10,9 +10,12 @@ template <class TTarget>
 class TCommandBuffer : public detail::CommandBufferImpl<TTarget> {
     NN_NO_COPY(TCommandBuffer);
 
+    typedef detail::CommandBufferImpl<typename detail::TargetVariation<TTarget>::Type> Impl;
+
     typedef void (*OutOfMemoryEventCallback)(TCommandBuffer<TTarget>*, const OutOfMemoryEventArg&);
 
 public:
+    typedef typename Impl::Target Target;
     typedef CommandBufferInfo InfoType;
 
     TCommandBuffer() {}
@@ -97,11 +100,19 @@ public:
     void SetTexture(int, ShaderStage, const DescriptorSlot&);
     void SetImage(int, ShaderStage, const DescriptorSlot&);
     void SetImage(int, ShaderStage, const TTextureView<TTarget>*);
-    void SetShader(const TShader<TTarget>*, int);
+
+    void SetShader(const TShader<Target>* pShader, int stageBits) {
+        return Impl::SetShader(pShader, stageBits);
+    }
+
     void SetRasterizerState(const TRasterizerState<TTarget>*);
     void SetBlendState(const TBlendState<TTarget>*);
     void SetDepthStencilState(const TDepthStencilState<TTarget>*);
-    void SetVertexState(const TVertexState<TTarget>*);
+
+    void SetVertexState(const TVertexState<Target>* pVertexState) {
+        return Impl::SetVertexState(pVertexState);
+    }
+
     void SetTessellationState(const TTessellationState<TTarget>*);
     void SetUserPtr(void*);
     void* GetUserPtr();

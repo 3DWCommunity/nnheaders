@@ -29,9 +29,19 @@ public:
     virtual void AnimateAndUpdateAnimFrame(f32 frame);
 
     static void SetAllocator(void* (*)(size_t, size_t, void*), void (*)(void*, void*), void*);
-    static void AllocateMemory(size_t, size_t);
-    static void AllocateMemory(size_t);
+    static void* AllocateMemory(size_t, size_t);
+    static void* AllocateMemory(size_t);
     static void FreeMemory(void* src);
+
+    template <typename T>
+    static void DeleteArray(T objs[], int count) {
+        if (objs) {
+            for (int i = 0; i < count; ++i) {
+                objs[i].~T();
+            }
+            FreeMemory(objs);
+        }
+    }
 
     u64 _10;
     u64 _18;
